@@ -11,3 +11,20 @@ $ touch test.txt
 四：添加到仓库
 $ git add test.txt
 $ git commit -m "描述内容"
+#时光机穿梭
+一：仓库当前的状态
+$ git status
+二：查看不同（修改部分）
+$ git diff
+#版本回退
+一：查看历史记录
+$ git log
+二：粗略查看历史记录
+$ git log --pretty=oneline
+三：HEAD的含义：上一个版本就是HEAD^，上上一个版本就是HEAD^^，当然往上100个版本写100个^比较容易数不过来，所以写成HEAD~100
+四：回退到上一版本
+# git reset --hard HEAD^
+五：回退到指定版本（版本号可以写前几位）
+$ git reset --hard 1094a
+六：查看之前的命令记录
+$ git reflog
