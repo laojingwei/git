@@ -60,3 +60,7 @@ $ git remote add origin git@github.com:laojingwei/git.git
 $ git push -u origin master
 三：从现在起，只要本地作了提交，就可以通过命令push
 $ git push origin master
+
+#克隆本地库
+一：Git支持多种协议，默认的git://使用ssh，但也可以使用https等其他协议。
+$ git clone git@github.com:laojingwei/git.git
