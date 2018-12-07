@@ -113,4 +113,5 @@ $ git branch -d dev
 六：查看分支合并情况
 $ git log --graph --pretty=oneline --abbrev-commit
 $ git log --graph
-# 解决冲突
+
+#分支管理制度
