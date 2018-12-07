@@ -1,4 +1,4 @@
-#创建版本库
+# 创建版本库
 一：创建一个空目录
 $ mkdir test
 $ cd test
@@ -11,12 +11,12 @@ $ touch test.txt
 四：添加到仓库
 $ git add test.txt
 $ git commit -m "描述内容"
-#时光机穿梭
+# 时光机穿梭
 一：仓库当前的状态
 $ git status
 二：查看不同（修改部分）
 $ git diff
-#版本回退
+# 版本回退
 一：查看历史记录
 $ git log
 二：粗略查看历史记录
@@ -28,12 +28,12 @@ $ git log --pretty=oneline
 $ git reset --hard 1094a
 六：查看之前的命令记录
 $ git reflog
-#工作区和暂存区
+# 工作区和暂存区
 一：就是你在电脑里能看到的目录，比如我的learngit文件夹就是一个工作区
 二：工作区有一个隐藏目录.git，这个不算工作区，而是Git的版本库（Git的版本库里存了很多东西，其中最重要的就是称为stage（或者叫index）的暂存区，还有Git为我们自动创建的第一个分支master，以及指向master的一个指针叫HEAD。）
-#管理修改
+# 管理修改
 一：提交后，用git diff HEAD -- test.txt命令可以查看工作区和版本库里面最新版本的区别
-#撤销修改
+# 撤销修改
 一：让这个文件回到最近一次git commit或git add时的状态
 # git checkout -- test.txt
 二：场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令git checkout -- file。
@@ -115,3 +115,5 @@ $ git log --graph --pretty=oneline --abbrev-commit
 $ git log --graph
 
 #分支管理制度
+一：准备合并dev分支，请注意--no-ff参数，表示禁用Fast forward
+git merge --no-ff -m "merge with no-ff"
