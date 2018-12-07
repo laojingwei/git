@@ -48,6 +48,12 @@ $ git rm test.txt
 $ git commit -m "xxxx"
 二：删错了
 git checkout -- test.txt
+三：删除远程仓库的文件或目录
+1、git rm -r --cached a/2.txt //删除a目录下的2.txt文件   删除a目录git rm -r --cached a
+2、git commit -m "删除a目录下的2.txt文件" 
+git push
+3、Note:
+用-r参数删除目录, git rm --cached a.txt 删除的是本地仓库中的文件，且本地工作区的文件会保留且不再与远程仓库发生跟踪关系，如果本地仓库中的文件也要删除则用git rm a.txt
 
 #生成密钥
 一：可以在用户主目录里找到.ssh目录，里面有id_rsa和id_rsa.pub两个文件，这两个就是SSH Key的秘钥对，id_rsa是私钥，不能泄露出去，id_rsa.pub是公钥，可以放心地告诉任何人
@@ -64,3 +70,46 @@ $ git push origin master
 #克隆本地库
 一：Git支持多种协议，默认的git://使用ssh，但也可以使用https等其他协议。
 $ git clone git@github.com:laojingwei/git.git
+
+#git库所在的文件夹中的文件大致有4种状态
+一：Untracked:
+未跟踪, 此文件在文件夹中, 但并没有加入到git库, 不参与版本控制. 通过git add 状态变为Staged.
+ 
+二：Unmodify:
+文件已经入库, 未修改, 即版本库中的文件快照内容与文件夹中完全一致. 这种类型的文件有两种去处, 如果它被修改,
+而变为Modified. 如果使用git rm移出版本库, 则成为Untracked文件
+ 
+三：Modified:
+文件已修改, 仅仅是修改, 并没有进行其他的操作. 这个文件也有两个去处, 通过git add可进入暂存staged状态,
+使用git checkout 则丢弃修改过, 返回到unmodify状态, 这个git checkout即从库中取出文件, 覆盖当前修改
+ 
+四：Staged:
+暂存状态. 执行git commit则将修改同步到库中, 这时库中的文件和本地文件又变为一致, 文件为Unmodify状态.
+执行git reset HEAD filename取消暂存, 文件状态为Modified
+ 
+五：Git 状态 untracked 和 not staged的区别
+1）untrack     表示是新文件，没有被add过，是为跟踪的意思。
+2）not staged  表示add过的文件，即跟踪文件，再次修改没有add，就是没有暂存的意思
+
+#分支管理
+一：创建dev分支，然后切换到dev分支
+$ git checkout -b dev
+二：加上-b参数表示创建并切换，相当于以下两条命令
+$ git branch dev
+$ git checkout deb
+三：查看分支
+$ git branch
+四：合并分支
+$ git merge dev
+五：删除分支
+$ git branch -d dev
+六：Git鼓励大量使用分支：
+查看分支：git branch
+创建分支：git branch <name>
+切换分支：git checkout <name>
+创建+切换分支：git checkout -b <name>
+合并某分支到当前分支：git merge <name>
+删除分支：git branch -d <name>
+六：查看分支合并情况
+$ git log --graph --pretty=oneline --abbrev-commit
+$ git log --graph
