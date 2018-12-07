@@ -86,7 +86,7 @@
  
 ## 四：Staged:
 ### 暂存状态. 执行git commit则将修改同步到库中, 这时库中的文件和本地文件又变为一致, 文件为Unmodify状态.
-执行git reset HEAD filename取消暂存, 文件状态为Modified
+### 执行git reset HEAD filename取消暂存, 文件状态为Modified
  
 ## 五：Git 状态 untracked 和 not staged的区别
 ### 1）untrack     表示是新文件，没有被add过，是为跟踪的意思。
@@ -118,3 +118,24 @@
 # 分支管理制度
 ## 一：准备合并dev分支，请注意--no-ff参数，表示禁用Fast forward
 ### git merge --no-ff -m "merge with no-ff"
+# Bug分支
+## 一：隐藏当前工作现场
+### $ git stash 
+## 切换到分支
+### $ git checkout master
+## 创建bug修复分支
+### $ git checkout -b bugID
+## 修复完后合并分支，切换回原工作区分支
+### $ git checkout dev
+## 查看刚才的工作现场区去哪了
+### $ git stash list
+## 恢复工作现场修改的内容
+### 方法一：
+#### 用git stash apply恢复，但是恢复后，stash内容并不删除，你需要用git stash drop来删除
+##### $ git stash app
+##### $ git stash drop
+### 方法二：
+#### 用git stash pop，恢复的同时把stash内容也删了
+##### $ git stash pop
+### 可以多次stash恢复（stash@{0} 是用git stash list 获取的）
+#### $ git stash apply stash@{0}
