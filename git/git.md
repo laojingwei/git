@@ -67,6 +67,8 @@
 ### $ git push -u origin master
 ## 三：从现在起，只要本地作了提交，就可以通过命令push
 ### $ git push origin master
+## 四：解除远程关联
+### $ git remote remove origin
 
 # 克隆本地库
 ## 一：Git支持多种协议，默认的git://使用ssh，但也可以使用https等其他协议。
@@ -121,21 +123,23 @@
 # Bug分支
 ## 一：隐藏当前工作现场
 ### $ git stash 
-## 切换到分支
+## 二：切换到分支
 ### $ git checkout master
-## 创建bug修复分支
+## 三：创建bug修复分支
 ### $ git checkout -b bugID
-## 修复完后合并分支，切换回原工作区分支
+## 四：修复完后合并分支，切换回原工作区分支
 ### $ git checkout dev
-## 查看刚才的工作现场区去哪了
+## 五：查看刚才的工作现场区去哪了
 ### $ git stash list
-## 恢复工作现场修改的内容
-### 方法一：
-#### 用git stash apply恢复，但是恢复后，stash内容并不删除，你需要用git stash drop来删除
+## 六：恢复工作现场修改的内容
+### 1、方法一：
+#### 1）、用git stash apply恢复，但是恢复后，stash内容并不删除，你需要用git stash drop来删除
 ##### $ git stash app
 ##### $ git stash drop
-### 方法二：
-#### 用git stash pop，恢复的同时把stash内容也删了
+### 2、方法二：
+#### 1）、用git stash pop，恢复的同时把stash内容也删了
 ##### $ git stash pop
-### 可以多次stash恢复（stash@{0} 是用git stash list 获取的）
+### 3、可以多次stash恢复（stash@{0} 是用git stash list 获取的）
 #### $ git stash apply stash@{0}
+## 七：如果要丢弃一个没有被合并过的分支，可以通过git branch -D <name>强行删除。
+### $ git branch -D xxx 
