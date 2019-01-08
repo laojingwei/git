@@ -10,6 +10,9 @@
 ### $ touch test.txt
 ## 四：添加到仓库
 ### $ git add test.txt
+### $ git add -A  提交所有变化
+### $ git add -u  提交被修改(modified)和被删除(deleted)文件，不包括新文件(new)
+### $ git add .  提交新文件(new)和被修改(modified)文件，不包括被删除(deleted)文件
 ### $ git commit -m "描述内容"
 # 时光机穿梭
 ## 一：仓库当前的状态
