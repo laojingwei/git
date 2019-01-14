@@ -1,29 +1,52 @@
 # 创建版本库
 ## 一：创建一个空目录
-### $ mkdir test
-### $ cd test
-### $ pwd
-### /Users/michael/test
+```
+$ mkdir test
+$ cd test
+$ pwd
+/Users/michael/test
+```
 ## 二：把这个目录变成Git可以管理的仓库（会生成一个.git目录）
-### $ git init
+`$ git init`
 ## 三：创建文件
-### $ touch test.txt
+`$ touch test.txt`
 ## 四：添加到仓库
-### $ git add test.txt
-### $ git add -A  提交所有变化
-### $ git add -u  提交被修改(modified)和被删除(deleted)文件，不包括新文件(new)
-### $ git add .  提交新文件(new)和被修改(modified)文件，不包括被删除(deleted)文件
-### $ git commit -m "描述内容"
+* `$ git add test.txt`
+* `$ git add -A`  提交所有变化
+* `$ git add -u`  提交被修改(modified)和被删除(deleted)文件，不包括新文件(new)
+* `$ git add .`  提交新文件(new)和被修改(modified)文件，不包括被删除(deleted)文件
+* `$ git commit -m "描述内容"` 提交
+* `git commit -a -m "描述内容"` 跳过暂存区（add）直接提交
 # 时光机穿梭
 ## 一：仓库当前的状态
-### $ git status
+* 完全展示当前状态情况
+
+	`$ git status`
+* 粗略展示当前状态yu
+
+	`$ git status -s / $ git status -short`
 ## 二：查看不同（修改部分）
-### $ git diff
+`$ git diff`
+
+> 此命令比较的是工作目录中当前文件和暂存区域快照之间的差异， 也就是修改之后还没有暂存起来的变化内容
+
+`$ git diff --cached / git diff --staged`
+
+> 若要查看已暂存的将要添加到下次提交里的内容，可以用 git diff --cached 命令。（Git 1.6.1 及更高版本还允许使用 git diff --staged，效果是相同的，但更好记些。）
+
+`git difftool --tool=vimdiff / git difftool --tool=emerge`
+
+> 使用vimdiff或emerge等Git Diff 的插件版本输出 diff 分析结果
+
+`git difftool --tool-help`
+
+> 查看你的系统支持哪些 Git Diff 插件
+
 # 版本回退
 ## 一：查看历史记录
-### $ git log
+`$ git log`
 ## 二：粗略查看历史记录
-### $ git log --pretty=oneline
+`$ git log --pretty=oneline`
 ## 三：HEAD的含义：上一个版本就是HEAD^，上上一个版本就是HEAD^^，当然往上100个版本写100个^比较容易数不过来，所以写成HEAD~100
 ## 四：回退到上一版本
 # git reset --hard HEAD^
@@ -45,6 +68,10 @@
 ### 场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令git reset HEAD <file>，就回到了场景1，第二步按场景1操作。
 
 ### 场景3：已经提交了不合适的修改到版本库时，想要撤销本次提交，参考版本回退一节，不过前提是没有推送到远程库。
+
+# 重命名文件
+
+`git mv xxx xxxnew`
 
 # 删除文件
 ## 一：要从版本库中删除该文件，那就用命令git rm删掉，并且git commit
