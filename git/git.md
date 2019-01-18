@@ -31,19 +31,19 @@ $ pwd
 ## 二：查看不同（修改部分）
 `$ git diff`
 
-> 此命令比较的是工作目录中当前文件和暂存区域快照之间的差异， 也就是修改之后还没有暂存起来的变化内容
+此命令比较的是工作目录中当前文件和暂存区域快照之间的差异， 也就是修改之后还没有暂存起来的变化内容
 
 `$ git diff --cached / git diff --staged`
 
-> 若要查看已暂存的将要添加到下次提交里的内容，可以用 git diff --cached 命令。（Git 1.6.1 及更高版本还允许使用 git diff --staged，效果是相同的，但更好记些。）
+若要查看已暂存的将要添加到下次提交里的内容，可以用 git diff --cached 命令。（Git 1.6.1 及更高版本还允许使用 git diff --staged，效果是相同的，但更好记些。）
 
 `git difftool --tool=vimdiff / git difftool --tool=emerge`
 
-> 使用vimdiff或emerge等Git Diff 的插件版本输出 diff 分析结果
+使用vimdiff或emerge等Git Diff 的插件版本输出 diff 分析结果
 
 `git difftool --tool-help`
 
-> 查看你的系统支持哪些 Git Diff 插件
+查看你的系统支持哪些 Git Diff 插件
 
 # 版本回退
 ## 一：查看历史记录
@@ -89,7 +89,7 @@ $ pwd
 2. git commit -m "删除a目录下的2.txt文件" 
 3. $ git push
 * Note:
-	> 用-r参数删除目录, git rm --cached a.txt 删除的是本地仓库中的文件，且本地工作区的文件会保留且不再与远程仓库发生跟踪关系，如果本地仓库中的文件也要删除则用git rm a.txt
+	 用-r参数删除目录, git rm --cached a.txt 删除的是本地仓库中的文件，且本地工作区的文件会保留且不再与远程仓库发生跟踪关系，如果本地仓库中的文件也要删除则用git rm a.txt
 
 # 生成密钥
 ## 一：可以在用户主目录里找到.ssh目录，里面有id_rsa和id_rsa.pub两个文件，这两个就是SSH Key的秘钥对，id_rsa是私钥，不能泄露出去，id_rsa.pub是公钥，可以放心地告诉任何人
