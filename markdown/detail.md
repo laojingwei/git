@@ -39,6 +39,11 @@
 
    ![图片](../markdown/assets/2/2.png)
    ![图片](../markdown/assets/2/2-1.png)
+   
+   ![图片](../markdown/assets/2/1.png)
+   ![图片](../markdown/assets/2/1-1.png)
+
+ 
 
 `可以看到，无序列表可以用* ， + ， — 来创建，用在线编辑器看，实际上是转换成了ul>li ，所以使用哪个都可以，推荐使用*吧`
 
