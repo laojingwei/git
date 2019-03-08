@@ -421,23 +421,27 @@ Promise在设计的时候保证所有响应的处理回调都是异步调用的�
 
 ES6 Module默认目前还没有被浏览器支持，需要使用babel，在日常写demo的时候经常会显示这个错误
 
+![module](../es6/assets/module/1.png)
 
 可以在script标签中使用tpye="module"在同域的情况下可以解决（非同域情况会被同源策略拦截，webstorm会开启一个同域的服务器没有这个问题，vscode貌似不行）
 
+![module](../es6/assets/module/2.png)
 
 ES6 Module使用import关键字导入模块，export关键字导出模块，它还有以下特点
 
-ES6 Module是静态的，也就是说它是在编译阶段运行，和var以及function一样具有提升效果（这个特点使得它支持tree shaking）
+1. ES6 Module是静态的，也就是说它是在编译阶段运行，和var以及function一样具有提升效果（这个特点使得它支持tree shaking）
 
-自动采用严格模式（顶层的this返回undefined）
+2. 自动采用严格模式（顶层的this返回undefined）
 
-ES6 Module支持使用export {<变量>}导出具名的接口，或者export default导出匿名的接口
+3. ES6 Module支持使用export {<变量>}导出具名的接口，或者export default导出匿名的接口
 
 module.js导出:
 
+![module](../es6/assets/module/3.png)
 
 a.js导入:
 
+![module](../es6/assets/module/4.png)
 
 这两者的区别是，export {<变量>}导出的是一个变量的引用，export default导出的是一个值
 
@@ -445,9 +449,11 @@ a.js导入:
 
 module.js:
 
+![module](../es6/assets/module/5.png)
 
 a.js:
 
+![module](../es6/assets/module/6.png)
 
 可以看到给module.js设置了一个一秒后改变x,y变量的定时器,在一秒后同时观察导入时候变量的值,可以发现x被改变了,但y的值仍是20,因为y是通过export default导出的,在导入的时候的值相当于只是导入数字20,而x是通过export {<变量>}导出的,它导出的是一个变量的引用,即a.js导入的是当前x的值,只关心当前x变量的值是什么,可以理解为一个"活链接"
 
@@ -455,63 +461,75 @@ export default这种导出的语法其实只是指定了一个命名导出,而�
 
 module.js导出:
 
+![module](../es6/assets/module/7.png)
 
 a.js导入:
 
+![module](../es6/assets/module/8.png)
 
 但是由于是使用export {<变量>}这种形式导出的模块,即使被重命名为default,仍然导出的是一个变量的引用
 
 这里再来说一下目前为止主流的模块化方案ES6 Module和CommonJs的一些区别
 
-CommonJs输出的是一个值的拷贝,ES6 Module通过export {<变量>}输出的是一个变量的引用,export default输出的是一个值
+1. CommonJs输出的是一个值的拷贝,ES6 Module通过export {<变量>}输出的是一个变量的引用,export default输出的是一个值
 
-CommonJs运行在服务器上,被设计为运行时加载,即代码执行到那一行才回去加载模块,而ES6 Module是静态的输出一个接口,发生在编译的阶段
+2. CommonJs运行在服务器上,被设计为运行时加载,即代码执行到那一行才回去加载模块,而ES6 Module是静态的输出一个接口,发生在编译的阶段
 
-CommonJs在第一次加载的时候运行一次并且会生成一个缓存,之后加载返回的都是缓存中的内容
+3. CommonJs在第一次加载的时候运行一次并且会生成一个缓存,之后加载返回的都是缓存中的内容
 
-import()
+## import()
 
 关于ES6 Module静态编译的特点,导致了无法动态加载,但是总是会有一些需要动态加载模块的需求,所以现在有一个提案,使用把import作为一个函数可以实现动态加载模块,它返回一个Promise,Promise被resolve时的值为输出的模块
 
+![module](../es6/assets/module/9.png)
+
+![module](../es6/assets/module/10.png)
 
 
 使用import方法改写上面的a.js使得它可以动态加载(使用静态编译的ES6 Module放在条件语句会报错,因为会有提升的效果,并且也是不允许的),可以看到输出了module.js的一个变量x和一个默认输出
 
 Vue中路由的懒加载的ES6写法就是使用了这个技术,使得在路由切换的时候能够动态的加载组件渲染视图
 
-函数默认值
+# 函数默认值
 ES6允许在函数的参数中设置默认值
 
 ES5写法:
 
+![default](../es6/assets/default/1.png)
 
 ES6写法:
 
+![default](../es6/assets/default/2.png)
 
 相比ES5,ES6函数默认值直接写在参数上,更加的直观
 
 如果使用了函数默认参数,在函数的参数的区域(括号里面),它会作为一个单独的作用域,并且拥有let/const方法的一些特性,比如暂时性死区,块级作用域等
 
+![default](../es6/assets/default/3.png)
 
 这里当运行func的时候,因为没有传参数,使用函数默认参数,y就会去寻找x的值,在沿着词法作用域在外层找到了值为1的变量x
 
 再来看一个例子
 
+![default](../es6/assets/default/4.png)
 
 这里同样没有传参数,使用函数的默认赋值,x通过词法作用域找到了变量w,所以x默认值为2,y同样通过词法作用域找到了刚刚定义的x变量,y的默认值为3,但是在解析到z = z + 1这一行的时候,JS解释器先会去解析z+1找到相应的值后再赋给变量z,但是因为暂时性死区的原因(let/const"劫持"了这个块级作用域,无法在声明之前使用这个变量,上文有解释),导致在let声明之前就使用了变量z,所以会报错
 
 这样理解函数的默认值会相对容易一些
 
+![default](../es6/assets/default/5.png)
 
 当传入的参数为undefined时才使用函数的默认值(显式传入undefined也会触发使用函数默认值,传入null则不会触发)
 
 在举个例子:
 
+![default](../es6/assets/default/6.png)
 
 这里借用阮一峰老师书中的一个例子,func的默认值为一个函数,执行后返回foo变量,而在函数内部执行的时候,相当于对foo变量的一次变量查询(LHS查询),而查询的起点是在这个单独的作用域中,即JS解释器不会去查询去函数内部查询变量foo,而是沿着词法作用域先查看同一作用域(前面的函数参数)中有没有foo变量,再往函数的外部寻找foo变量,最终找不到所以报错了,这个也是函数默认值的一个特点
 
-函数默认值配合解构赋值
+## 函数默认值配合解构赋值
 
+![default](../es6/assets/default/7.png)
 
 第一行给func函数传入了2个空对象,所以函数的第一第二个参数都不会使用函数默认值,然后函数的第一个参数会尝试解构对象,提取变量x,因为第一个参数传入了一个空对象,所以解构不出变量x,但是这里又在内层设置了一个默认值,所以x的值为10,而第二个参数同样传了一个空对象,不会使用函数默认值,然后会尝试解构出变量y,发现空对象中也没有变量y,但是y没有设置默认值所以解构后y的值为undefined
 
@@ -523,57 +541,64 @@ ES6写法:
 
 第五行直接使用传入的参数,不会使用函数默认值,并且能够顺利的解构出变量x,y
 
-Proxy
+# Proxy
 Proxy作为一个"拦截器",可以在目标对象前架设一个拦截器,他人访问对象,必须先经过这层拦截器,Proxy同样是一个构造函数,使用new关键字生成一个拦截对象的实例,ES6提供了非常多对象拦截的操作,几乎覆盖了所有可能修改目标对象的情况(Proxy一般和Reflect配套使用,前者拦截对象,后者返回拦截的结果,Proxy上有的的拦截方法Reflect都有)
 
+![proxy](../es6/assets/proxy/1.png)
 
-Object.definePropery
+## Object.definePropery
 
 提到Proxy就不得不提一下ES5中的Object.defineProperty,这个api可以给一个对象添加属性以及这个属性的属性描述符/访问器(这2个不能共存,同一属性只能有其中一个),属性描述符有configurable,writable,enumerable,value这4个属性,分别代表是否可配置,是否只读,是否可枚举和属性的值,访问器有configurable,enumerable,get,set,前2个和属性描述符功能相同,后2个都是函数,定义了get,set后对元素的读写操作都会执行后面的getter/setter函数,并且覆盖默认的读写行为
 
+![proxy](../es6/assets/proxy/2.png)
 
 定义了obj中a属性的表示为只读,且不可枚举,obj2定义了get,但没有定义set表示只读,并且读取obj2的b属性返回的值是getter函数的返回值
 
 ES5中的Object.defineProperty这和Proxy有什么关系呢?个人理解Proxy是Object.defineProperty的增强版,ES5只规定能够定义属性的属性描述符或访问器.而Proxy增强到了13种,具体太多了我就不一一放出来了,这里我举几个比较有意思的例子
 
-handler.apply
+## handler.apply
 
 apply可以让我们拦截一个函数(JS中函数也是对象,Proxy也可以拦截函数)的执行,我们可以把它用在函数节流中
 
+![proxy](../es6/assets/proxy/3.png)
 
 调用拦截后的函数:
 
+![proxy](../es6/assets/proxy/4.png)
 
-handler.contruct
+## handler.contruct
 
 contruct可以拦截通过new关键字调用这个函数的操作,我们可以把它用在单例模式中
 
+![proxy](../es6/assets/proxy/5.png)
 
 这里通过一个闭包保存了instance变量,每次使用new关键字调用被拦截的函数后都会查看这个instance变量,如果存在就返回闭包中保存的instance变量,否则就新建一个实例,这样可以实现全局只有一个实例
 
-handler.defineProperty
+## handler.defineProperty
 
 defineProperty可以拦截对这个对象的Object.defineProerty操作
 
-注意对象内部的默认的[[SET]]操作(即对这个对象的属性赋值)会间接触发defineProperty和getOwnPropertyDescriptor这2个拦截方法
+**注意对象内部的默认的[[SET]]操作(即对这个对象的属性赋值)会间接触发defineProperty和getOwnPropertyDescriptor这2个拦截方法**
 
+![proxy](../es6/assets/proxy/6.png)
 
 这里有几个知识点
 
-这里使用了递归的操作,当需要访问对象的属性时候,会判断代理的对象属性的值仍是一个可以代理的对象就递归的进行代理,否则通过错误捕获执行默认的get操作
-定义了defineProperty的拦截方法,当对这个代理对象的某个属性进行赋值的时候会执行对象内部默认的[[SET]]操作进行赋值,这个操作会间接触发defineProperty这个方法,随后会执行定义的callback函数
+1. 这里使用了递归的操作,当需要访问对象的属性时候,会判断代理的对象属性的值仍是一个可以代理的对象就递归的进行代理,否则通过错误捕获执行默认的get操作
+2. 定义了defineProperty的拦截方法,当对这个代理对象的某个属性进行赋值的时候会执行对象内部默认的[[SET]]操作进行赋值,这个操作会间接触发defineProperty这个方法,随后会执行定义的callback函数
 这样就实现了无论对象嵌套多少层,只要有属性进行赋值就会触发get方法,对这层对象进行代理,随后触发defineProperty执行callback回调函数
 
-其他的使用场景
+## 其他的使用场景
 
 Proxy另外还有很多功能,比如在实现验证器的时候,可以将业务逻辑和验证器分离达到解耦,通过defineProperty设置一些私有变量,拦截对象做日志记录等
 
-Vue
+## Vue
 
 尤大预计2019年下半年发布Vue3.0,其中一个核心的功能就是使用Proxy替代Object.defineProperty
 
 我相信了解过一点Vue响应式原理的人都知道Vue框架在对象拦截上的一些不足
 
+```
 <template>
    <div>
        <div>{{arr}}</div>
@@ -608,10 +633,13 @@ Vue
         },
    }
 </script>
-复制代码
+```
+
+![proxy](../es6/assets/proxy/7.gif)
 
 可以看到这里数据改变了,控制台打印出了新的值,但是视图没有更新,这是因为Vue内部使用Object.defineProperty进行的数据劫持,而这个API无法探测到对象根属性的添加和删除,以及直接给数组下标进行赋值,所以不会通知渲染watcher进行视图更新,而理论上这个API也无法探测到数组的一系列方法(push,splice,pop),但是Vue框架修改了数组的原型,使得在调用这些方法修改数据后会执行视图更新的操作
 
+```
 //源码位置:src/core/observer/array.js
 methodsToPatch.forEach(function (method) {
   // cache original method
@@ -638,56 +666,67 @@ methodsToPatch.forEach(function (method) {
     return result
   });
 });
-复制代码
-在掘金翻译的尤大Vue3.0计划中写到
+```
 
-3.0 将带来一个基于 Proxy 的 observer 实现，它可以提供覆盖语言 (JavaScript——译注) 全范围的响应式能力，消除了当前 Vue 2 系列中基于 Object.defineProperty 所存在的一些局限，如： 对属性的添加、删除动作的监测 对数组基于下标的修改、对于 .length 修改的监测 对 Map、Set、WeakMap 和 WeakSet 的支持
+在[掘金翻译的尤大Vue3.0计划](https://juejin.im/post/5bb719b9f265da0ab915dbdd)中写到
+
+> 3.0 将带来一个基于 Proxy 的 observer 实现，它可以提供覆盖语言 (JavaScript——译注) 全范围的响应式能力，消除了当前 Vue 2 系列中基于 Object.defineProperty 所存在的一些局限，如： 对属性的添加、删除动作的监测 对数组基于下标的修改、对于 .length 修改的监测 对 Map、Set、WeakMap 和 WeakSet 的支持
 
 Proxy就没有这个问题,并且还提供了更多的拦截方法,完全可以替代Object.defineProperty,唯一不足的也就是浏览器的支持程度了(IE:谁在说我?)
 
 所以要想深入了解Vue3.0实现机制,学会Proxy是必不可少的
 
-Object.assign
+# Object.assign
+
 这个ES6新增的Object静态方法允许我们进行多个对象的合并
 
+![Object.assign](../es6/assets/obAssign/1.png)
 
 可以这么理解,Object.assign遍历需要合并给target的对象(即sourece对象的集合)的属性,用等号进行赋值,这里遍历{a:1}将属性a和值数字1赋值给target对象,然后再遍历{b:2}将属性b和值数字2赋值给target对象
 
 这里罗列了一些这个API的需要注意的知识点
 
-Object.assign是浅拷贝,对于值是引用类型的属性,拷贝仍旧的是它的引用
+1. Object.assign是浅拷贝,对于值是引用类型的属性,拷贝仍旧的是它的引用
 
-可以拷贝Symbol属性
+2. 可以拷贝Symbol属性
 
-不能拷贝不可枚举的属性
+3.不能拷贝不可枚举的属性
 
-Object.assign保证target始终是一个对象,如果传入一个基本类型,会转为基本包装类型,null/undefined没有基本包装类型,所以传入会报错
+4. Object.assign保证target始终是一个对象,如果传入一个基本类型,会转为基本包装类型,null/undefined没有基本包装类型,所以传入会报错
 
-source参数如果是不可枚举的数据类型会忽略合并(字符串类型被认为是可枚举的,因为内部有iterator接口)
+5. source参数如果是不可枚举的数据类型会忽略合并(字符串类型被认为是可枚举的,因为内部有iterator接口)
 
-因为是用等号进行赋值,如果被赋值的对象的属性有setter函数会触发setter函数,同理如果有getter函数,也会调用赋值对象的属性的getter函数(这就是为什么Object.assign无法合并对象属性的访问器,因为它会直接执行对应的getter/setter函数而不是合并它们,如果需要合并对象属性的getter/setter函数,可以使用ES7提供的Object.getOwnPropertyDescriptors和Object.defineProperties这2个API实现)
+6. 因为是用等号进行赋值,如果被赋值的对象的属性有setter函数会触发setter函数,同理如果有getter函数,也会调用赋值对象的属性的getter函数(这就是为什么Object.assign无法合并对象属性的访问器,因为它会直接执行对应的getter/setter函数而不是合并它们,如果需要合并对象属性的getter/setter函数,可以使用ES7提供的Object.getOwnPropertyDescriptors和Object.defineProperties这2个API实现)
 
+![Object.assign](../es6/assets/obAssign/2.png)
 
+![Object.assign](../es6/assets/obAssign/3.png)
 
 可以看到这里成功的复制了obj对象中a属性的getter/setter
 
 为了加深了解我自己模拟了Object.assign的实现,可供参考
 
+![Object.assign](../es6/assets/obAssign/4.png)
 
-这里有一个坑不得不提,对于target参数传入一个字符串,内部会转换为基本包装类型,而字符串基本包装类型的属性是只读的(属性描述符的writable属性为false),这里感谢木易杨的专栏
+这里有一个坑不得不提,对于target参数传入一个字符串,内部会转换为基本包装类型,而字符串基本包装类型的属性是只读的(属性描述符的writable属性为false),这里感谢[木易杨](https://juejin.im/post/5c31e5c4e51d45524975d05a)的专栏
 
+![Object.assign](../es6/assets/obAssign/5.png)
 
+![Object.assign](../es6/assets/obAssign/6.png)
 
 打印对象属性的属性描述符可以看到下标属性的值都是只读的,即不能再次赋值,所以尝试以下操作会报错
 
+![Object.assign](../es6/assets/obAssign/7.png)
 
 字符串abc会转为基本包装类型,然后将字符串def合并给这个基本包装类型的时候会将字符串def展开,分别将字符串def赋值给基本包装类型abc的0,1,2属性,随后就会在赋值的时候报错(非严格模式下会只会静默处理,ES6的Object.assign默认开启了严格模式)
 
-和ES9的对象扩展运算符对比
+## 和ES9的对象扩展运算符对比
 
 ES9支持在对象上使用扩展运算符,实现的功能和Object.assign相似,唯一的区别就是在含有getter/setter函数的对象的属性上有所区别
 
+![Object.assign](../es6/assets/obAssign/8.png)
 
+![Object.assign](../es6/assets/obAssign/9.png)
 
 (最后一个字符串get可以忽略,这是控制台为了显示a变量触发的getter函数)
 
@@ -695,26 +734,32 @@ ES9支持在对象上使用扩展运算符,实现的功能和Object.assign相似
 
 ES9:
 
-会合并2个对象,并且只触发2个对象对应属性的getter函数
-相同属性的后者覆盖了前者,所以a属性的值是第二个getter函数return的值
+* 会合并2个对象,并且只触发2个对象对应属性的getter函数
+* 相同属性的后者覆盖了前者,所以a属性的值是第二个getter函数return的值
+
 ES6:
 
-同样会合并这2个对象,并且只触发了obj上a属性的setter函数而不会触发它的getter函数(结合上述Object.assgin的内部实现理解会容易一些)
-obj上a属性的setter函数替代默认的赋值行为,导致obj2的a属性不会被复制过来
+* 同样会合并这2个对象,并且只触发了obj上a属性的setter函数而不会触发它的getter函数(结合上述Object.assgin的内部实现理解会容易一些)
+* obj上a属性的setter函数替代默认的赋值行为,导致obj2的a属性不会被复制过来
 除去对象属性有getter/setter的情况,Object.assgin和对象扩展运算符功能是相同的,两者都可以使用,两者都是浅拷贝,使用ES9的方法相对简洁一点
 
-建议
+## 建议
 
-Vue中重置data中的数据
-这个是我最常用的小技巧,使用Object.assign可以将你目前组件中的data对象和组件默认初始化状态的data对象中的数据合并,这样可以达到初始化data对象的效果
+1. Vue中重置data中的数据
 
+    这个是我最常用的小技巧,使用Object.assign可以将你目前组件中的data对象和组件默认初始化状态的data对象中的数据合并,这样可以达到初始化data对象的效果
 
-在当前组件的实例中$data属性保存了当前组件的data对象,而$options是当前组件实例初始化时的一些属性,其中有个data方法,即在在组件中写的data函数,执行后会返回一个初始化的data对象,然后将这个初始化的data对象合并到当前的data来初始化所有数据
+    ![Object.assign](../es6/assets/obAssign/10.png)
 
-给对象合并需要的默认属性
+    在当前组件的实例中$data属性保存了当前组件的data对象,而$options是当前组件实例初始化时的一些属性,其中有个data方法,即在在组件中写的data函数,执行后会返回一个初始化的data对象,然后将这个初始化的data对象合并到当前的data来初始化所有数据
 
-可以封装一个函数,外层声明一个DEFAULTS常量,options为每次传入的动态配置,这样每次执行后会合并一些默认的配置项
+2. 给对象合并需要的默认属性
 
-在传参的时候可以多个数据合并成一个对象传给后端
+    ![Object.assign](../es6/assets/obAssign/11.png)
 
+    可以封装一个函数,外层声明一个DEFAULTS常量,options为每次传入的动态配置,这样每次执行后会合并一些默认的配置项
+
+3. 在传参的时候可以多个数据合并成一个对象传给后端
+
+    ![Object.assign](../es6/assets/obAssign/12.png)
 
