@@ -1,6 +1,7 @@
 > author -- *xww*
 > creationTime -- *20150115*
 
+*[→→→更多git知识可以进入该网站学习←←←](http://www.softwhy.com/article-8478-1.html)*
 # 创建版本库
 ## 一：创建一个空目录
 ```
